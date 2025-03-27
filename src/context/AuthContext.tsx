@@ -1,4 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged
+} from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 import { toast } from "sonner";
 
 // Types
@@ -17,13 +25,8 @@ interface AuthContextProps {
   logout: () => Promise<void>;
 }
 
-// Context
+// Create context with a default undefined value
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
-
-// Mock auth functions (later to be replaced with Firebase)
-const mockUsers = [
-  { id: "1", name: "Demo User", email: "demo@example.com", password: "password123" }
-];
 
 // Provider component
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -31,18 +34,41 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Check for stored user on mount
+  // Listen for auth state changes
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (e) {
-        console.error("Failed to parse stored user", e);
-        localStorage.removeItem('user');
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      setLoading(true);
+      
+      if (firebaseUser) {
+        try {
+          // Fetch user profile from Firestore
+          const userDoc = await getDoc(doc(db, "users", firebaseUser.uid));
+          
+          if (userDoc.exists()) {
+            const userData = userDoc.data() as Omit<User, "id">;
+            setUser({
+              id: firebaseUser.uid,
+              ...userData
+            });
+          } else {
+            // Basic user info if profile not found
+            setUser({
+              id: firebaseUser.uid,
+              name: firebaseUser.displayName || "User",
+              email: firebaseUser.email || "",
+            });
+          }
+        } catch (err) {
+          console.error("Error fetching user data:", err);
+        }
+      } else {
+        setUser(null);
       }
-    }
-    setLoading(false);
+      
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   // Login function
@@ -51,23 +77,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setError(null);
     
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const foundUser = mockUsers.find(u => u.email === email && u.password === password);
-      
-      if (foundUser) {
-        const { password, ...userWithoutPassword } = foundUser as (User & { password: string });
-        setUser(userWithoutPassword);
-        localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-        toast.success("Logged in successfully");
-      } else {
-        throw new Error("Invalid email or password");
-      }
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Login failed";
+      await signInWithEmailAndPassword(auth, email, password);
+      toast.success("Logged in successfully");
+    } catch (error: any) {
+      const message = error?.message || "Login failed";
       setError(message);
       toast.error(message);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -79,30 +95,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setError(null);
     
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Create user in Firebase Auth
+      const { user: firebaseUser } = await createUserWithEmailAndPassword(auth, email, password);
       
-      if (mockUsers.some(u => u.email === email)) {
-        throw new Error("Email already in use");
-      }
-      
-      const newUser = {
-        id: String(mockUsers.length + 1),
+      // Create user document in Firestore
+      await setDoc(doc(db, "users", firebaseUser.uid), {
         name,
         email,
-        password
-      };
+        createdAt: new Date(),
+      });
       
-      mockUsers.push(newUser);
-      
-      const { password: _, ...userWithoutPassword } = newUser;
-      setUser(userWithoutPassword);
-      localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-      toast.success("Registration successful");
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Registration failed";
+      toast.success("Account created successfully");
+    } catch (error: any) {
+      const message = error?.message || "Registration failed";
       setError(message);
       toast.error(message);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -113,23 +121,29 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setLoading(true);
     
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      setUser(null);
-      localStorage.removeItem('user');
+      await signOut(auth);
       toast.success("Logged out successfully");
-    } catch (error) {
-      const message = "Logout failed";
+    } catch (error: any) {
+      const message = error?.message || "Logout failed";
       setError(message);
       toast.error(message);
+      throw error;
     } finally {
       setLoading(false);
     }
   };
 
+  const value = {
+    user,
+    loading,
+    error,
+    login,
+    register,
+    logout
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, error, login, register, logout }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
