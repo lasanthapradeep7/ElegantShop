@@ -28,7 +28,7 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <span className="text-xl font-semibold"><span className="text-primary">Elegant</span>Shop</span>
+            <span className="text-xl font-semibold">ElegantShop</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -59,7 +59,6 @@ export const Navbar = () => {
               <Search size={20} />
             </button>
             
-            {user ? (
             <Link 
               to="/cart" 
               className="text-foreground/80 hover:text-foreground transition-colors relative"
@@ -72,12 +71,7 @@ export const Navbar = () => {
                 </span>
               )}
             </Link>
-            ) : (
-              <Link to="/login" className="text-foreground/80 hover:text-foreground transition-colors">
-                <ShoppingCart size={20} />
-              </Link>
-            )}
-
+            
             {user ? (
               <div className="relative group">
                 <button className="flex items-center space-x-2 text-foreground/80 hover:text-foreground transition-colors">
@@ -110,7 +104,6 @@ export const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-4">
-          {user ? (
             <Link 
               to="/cart" 
               className="text-foreground/80 hover:text-foreground transition-colors relative"
@@ -123,11 +116,6 @@ export const Navbar = () => {
                 </span>
               )}
             </Link>
-            ) : (
-              <Link to="/login" className="text-foreground/80 hover:text-foreground transition-colors">
-                <ShoppingCart size={20} />
-              </Link>
-            )}
             
             <button
               onClick={toggleMobileMenu}
