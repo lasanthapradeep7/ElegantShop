@@ -4,6 +4,10 @@ import { Trash2, Plus, Minus, ArrowRight, ArrowLeft, ShoppingBag } from "lucide-
 import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import Visa from "../assets/visa.png";
+import MC from "../assets/mc.png";
+import Amex from "../assets/amex.png";
+import Paypal from "../assets/paypal.png";
 
 const Cart = () => {
   const { state: cart, removeItem, updateQuantity, clearCart } = useCart();
@@ -208,10 +212,10 @@ const Cart = () => {
                   <div className="mt-6">
                     <h3 className="text-sm font-medium text-gray-900 mb-2">We Accept</h3>
                     <div className="flex space-x-2">
-                      <div className="h-8 w-12 bg-gray-100 rounded flex items-center justify-center text-gray-500 text-xs">VISA</div>
-                      <div className="h-8 w-12 bg-gray-100 rounded flex items-center justify-center text-gray-500 text-xs">MC</div>
-                      <div className="h-8 w-12 bg-gray-100 rounded flex items-center justify-center text-gray-500 text-xs">AMEX</div>
-                      <div className="h-8 w-12 bg-gray-100 rounded flex items-center justify-center text-gray-500 text-xs">PAYPAL</div>
+                      <div className="h-8 w-12 bg-gray-100 rounded flex items-center justify-center"><img src={Visa}/></div>
+                      <div className="h-8 w-12 bg-gray-100 rounded flex items-center justify-center"><img src={MC}/></div>
+                      <div className="h-8 w-12 bg-gray-100 rounded flex items-center justify-center"><img src={Amex}/></div>
+                      <div className="h-8 w-12 bg-gray-100 rounded flex items-center justify-center"><img src={Paypal}/></div>
                     </div>
                   </div>
                 </div>

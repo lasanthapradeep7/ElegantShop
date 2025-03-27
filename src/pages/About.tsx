@@ -20,7 +20,7 @@ const About = () => {
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Story</h2>
               <div className="space-y-4 text-gray-600">
                 <p>
-                  Founded in 2018, ElegantShop was born from a passion for simplicity, quality, and thoughtful design. 
+                  Founded in 2020, ElegantShop was born from a passion for simplicity, quality, and thoughtful design. 
                   We started with a simple idea: to create products that enhance people's lives through their functionality and beauty.
                 </p>
                 <p>

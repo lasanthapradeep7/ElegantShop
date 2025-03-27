@@ -141,9 +141,9 @@ const Account = () => {
                     <p>{user.name}</p>
                     <p>123 Example Street</p>
                     <p>Apt 4B</p>
-                    <p>New York, NY 10001</p>
-                    <p>United States</p>
-                    <p className="mt-1">+1 (234) 567-8901</p>
+                    <p>Anuradhapura, North Central 5000</p>
+                    <p>Sri Lanka</p>
+                    <p className="mt-1">+94 (78) 727 4932</p>
                   </div>
                 </div>
                 

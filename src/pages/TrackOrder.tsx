@@ -120,7 +120,7 @@ const TrackOrder = () => {
                     <h2 className="text-lg font-medium text-gray-900">Order #{order.id}</h2>
                     <p className="text-sm text-gray-600">Placed on {order.date}</p>
                   </div>
-                  <div className="px-3 py-1 rounded-full bg-primary bg-opacity-10 text-primary text-sm font-medium">
+                  <div className="px-3 py-1 rounded-full bg-primary bg-opacity-10 text-white text-sm font-medium">
                     {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                   </div>
                 </div>

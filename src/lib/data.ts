@@ -166,10 +166,10 @@ export const orders: Order[] = [
     shippingAddress: {
       name: "John Doe",
       street: "123 Main St",
-      city: "New York",
-      state: "NY",
-      zip: "10001",
-      country: "United States"
+      city: "Anuradhapura",
+      state: "North Central",
+      zip: "50000",
+      country: "Sri Lanka"
     }
   },
   {
@@ -184,10 +184,10 @@ export const orders: Order[] = [
     shippingAddress: {
       name: "John Doe",
       street: "123 Main St",
-      city: "New York",
-      state: "NY",
-      zip: "10001",
-      country: "United States"
+      city: "Anuradhapura",
+      state: "North Central",
+      zip: "50000",
+      country: "Sri Lanka"
     }
   },
   {
@@ -204,10 +204,10 @@ export const orders: Order[] = [
     shippingAddress: {
       name: "John Doe",
       street: "123 Main St",
-      city: "New York",
-      state: "NY",
-      zip: "10001",
-      country: "United States"
+      city: "Anuradhapura",
+      state: "North Central",
+      zip: "50000",
+      country: "Sri Lanka"
     }
   }
 ];

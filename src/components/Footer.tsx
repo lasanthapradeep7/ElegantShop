@@ -18,21 +18,21 @@ export const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a 
-                href="#" 
+                href="https://www.facebook.com/" 
                 aria-label="Facebook"
                 className="w-10 h-10 flex items-center justify-center rounded-full text-gray-600 hover:text-primary hover:bg-gray-100 transition-colors"
               >
                 <Facebook size={18} />
               </a>
               <a 
-                href="#" 
+                href="https://www.twitter.com/" 
                 aria-label="Twitter"
                 className="w-10 h-10 flex items-center justify-center rounded-full text-gray-600 hover:text-primary hover:bg-gray-100 transition-colors"
               >
                 <Twitter size={18} />
               </a>
               <a 
-                href="#" 
+                href="https://www.instagram.com/" 
                 aria-label="Instagram"
                 className="w-10 h-10 flex items-center justify-center rounded-full text-gray-600 hover:text-primary hover:bg-gray-100 transition-colors"
               >
