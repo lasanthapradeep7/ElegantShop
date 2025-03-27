@@ -134,7 +134,7 @@ const Contact = () => {
                 Come say hello at our office.
               </p>
               <address className="not-italic text-primary">
-                Anuradhapura<br />
+                Anuradhapura,<br />
                 Sri Lanka
               </address>
             </div>
@@ -288,7 +288,7 @@ const Contact = () => {
                     <div className="text-center p-6">
                       <MapPin className="h-10 w-10 text-gray-400 mx-auto mb-4" />
                       <p className="text-gray-600">Map view would appear here</p>
-                      <p className="text-sm text-gray-500 mt-2">123 Design Street, Creative City, 12345</p>
+                      <p className="text-sm text-gray-500 mt-2">Anuradhapura, Sri Lanka, 50000</p>
                     </div>
                   </div>
                 </div>

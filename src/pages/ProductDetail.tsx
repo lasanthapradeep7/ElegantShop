@@ -21,7 +21,7 @@ const ProductDetail = () => {
   // Images array - normally would come from product data
   const productImages = [
     product?.image,
-    "https://images.unsplash.com/photo-1567374783626-237c6fabb078?q=80&w=2680&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1571867424488-4565932edb41?q=80&w=1974&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?q=80&w=2680&auto=format&fit=crop",
   ];
   

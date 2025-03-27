@@ -329,9 +329,9 @@ const Checkout = () => {
               className="input-primary w-full"
               required
             >
-              <option value="United States">United States</option>
+              <option value="United States">Sri Lanka</option>
               <option value="Canada">Canada</option>
-              <option value="United Kingdom">United Kingdom</option>
+              <option value="United Kingdom">United Status</option>
               <option value="Australia">Australia</option>
               <option value="Germany">Germany</option>
               <option value="France">France</option>

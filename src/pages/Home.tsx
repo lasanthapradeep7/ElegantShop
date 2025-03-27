@@ -17,7 +17,7 @@ const heroSlides = [
   {
     title: "New Summer Collection",
     description: "Explore our latest arrivals for the season",
-    image: "https://images.unsplash.com/photo-1600494603989-9650cf6dad51?q=80&w=2670&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=2073&auto=format&fit=crop",
     link: "/products?category=clothing",
     color: "from-blue-900/70",
   },
@@ -183,7 +183,7 @@ const Home = () => {
                   className="group relative rounded-lg overflow-hidden bg-white shadow-sm transition-all hover:shadow-md"
                 >
                   <div className="aspect-square bg-gray-100 relative">
-                    {/* You can add category images here if available */}
+                    <img src={category.image}/>
                     <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent flex items-end p-4">
                       <h3 className="text-white font-medium text-center w-full group-hover:underline">
                         {category.name}
