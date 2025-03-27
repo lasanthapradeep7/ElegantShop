@@ -4,12 +4,12 @@ import { getFirestore } from 'firebase/firestore';
 
 // Replace with your Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDfLy8geALKw73TCnul7pMqD_XVrZR5frg",
-    authDomain: "elegantshop-1d071.firebaseapp.com",
-    projectId: "elegantshop-1d071",
-    storageBucket: "elegantshop-1d071.firebasestorage.app",
-    messagingSenderId: "672528522776",
-    appId: "1:672528522776:web:9ad7ea7f461f0e1ce26d6d",
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
