@@ -2,12 +2,12 @@ import { Product } from "@/context/CartContext";
 
 // Categories
 export const categories = [
-  { id: "all", name: "All Products" },
-  { id: "electronics", name: "Electronics" },
-  { id: "clothing", name: "Clothing" },
-  { id: "home", name: "Home & Kitchen" },
-  { id: "beauty", name: "Beauty & Personal Care" },
-  { id: "books", name: "Books" },
+  { id: "all", name: "All Products", image: "https://images.pexels.com/photos/2536965/pexels-photo-2536965.jpeg"},
+  { id: "electronics", name: "Electronics", image: "https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg"},
+  { id: "clothing", name: "Clothing", image: "https://images.pexels.com/photos/8743972/pexels-photo-8743972.jpeg" },
+  { id: "home", name: "Home & Kitchen", image: "https://images.pexels.com/photos/5556176/pexels-photo-5556176.jpeg" },
+  { id: "beauty", name: "Beauty & Personal Care", image: "https://images.pexels.com/photos/2866796/pexels-photo-2866796.jpeg" },
+  { id: "books", name: "Books", image: "https://images.pexels.com/photos/1517355/pexels-photo-1517355.jpeg" },
 ];
 
 // Mock Products
@@ -88,7 +88,7 @@ export const products: Product[] = [
     id: "10",
     name: "Minimalist Wall Clock",
     price: 39.99,
-    image: "https://images.unsplash.com/photo-1563861826100-9cb78f20f3a6?q=80&w=2670&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?q=80&w=2070&auto=format&fit=crop",
     description: "Simple, elegant wall clock with a silent movement mechanism. Available in multiple colors to match any interior.",
     category: "home",
   },
@@ -104,7 +104,7 @@ export const products: Product[] = [
     id: "12",
     name: "Premium Coffee Maker",
     price: 149.99,
-    image: "https://images.unsplash.com/photo-1520970519539-8c9eaad9d5fa?q=80&w=2574&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1664135974084-465ca3fcf5ab?q=80&w=2127&auto=format&fit=crop",
     description: "High-quality coffee maker with programmable settings, built-in grinder, and thermal carafe to keep your coffee hot for hours.",
     category: "home",
   },
