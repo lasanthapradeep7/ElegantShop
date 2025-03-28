@@ -9,7 +9,7 @@ import Facebook from "../assets/facebook.png";
 const Register = () => {
   const { register, loading, error } = useAuth();
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,63 +18,63 @@ const Register = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
     // Clear error for this field if it exists
     if (formErrors[name]) {
-      setFormErrors(prev => {
+      setFormErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
       });
     }
   };
-  
+
   const validateForm = () => {
     const errors: Record<string, string> = {};
-    
+
     if (!formData.name.trim()) {
       errors.name = "Name is required";
     }
-    
+
     if (!formData.email.trim()) {
       errors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       errors.email = "Please enter a valid email address";
     }
-    
+
     if (!formData.password.trim()) {
       errors.password = "Password is required";
     } else if (formData.password.length < 6) {
       errors.password = "Password must be at least 6 characters";
     }
-    
+
     if (formData.password !== formData.confirmPassword) {
       errors.confirmPassword = "Passwords do not match";
     }
-    
+
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
-  
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     try {
       await register(formData.name, formData.email, formData.password);
-      navigate("/");
+      navigate("/login");
     } catch (err) {
-      // Error will be handled by the auth context
+      console.error("Registration error:", err); //log the error
     }
   };
-  
+
   return (
     <main className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -92,11 +92,14 @@ const Register = () => {
           <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Display auth error */}
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative" role="alert">
+              <div
+                className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
+                role="alert"
+              >
                 <span className="block sm:inline">{error}</span>
               </div>
             )}
-            
+
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                 Full Name
@@ -120,7 +123,7 @@ const Register = () => {
                 )}
               </div>
             </div>
-            
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address
@@ -179,7 +182,7 @@ const Register = () => {
                 )}
               </div>
             </div>
-            
+
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
                 Confirm Password
@@ -215,9 +218,25 @@ const Register = () => {
               >
                 {loading ? (
                   <div className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                     Creating account...
                   </div>
@@ -244,7 +263,7 @@ const Register = () => {
                 className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
               >
                 <span className="sr-only">Sign up with Google</span>
-                <img src={Google} className="w-5 h-5"/>
+                <img src={Google} alt="Google logo" className="w-5 h-5" />
               </button>
 
               <button
@@ -252,15 +271,22 @@ const Register = () => {
                 className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
               >
                 <span className="sr-only">Sign up with Facebook</span>
-                <img src={Facebook} className="w-5 h-5"/>
+                <img src={Facebook} alt="Facebook logo" className="w-5 h-5" />
               </button>
             </div>
-            
+
             <p className="mt-6 text-xs text-center text-gray-500">
               By signing up, you agree to our
-              <a href="#" className="text-primary hover:text-primary-dark"> Terms of Service </a>
+              <a href="#" className="text-primary hover:text-primary-dark">
+                {" "}
+                Terms of Service{" "}
+              </a>
               and
-              <a href="#" className="text-primary hover:text-primary-dark"> Privacy Policy</a>.
+              <a href="#" className="text-primary hover:text-primary-dark">
+                {" "}
+                Privacy Policy
+              </a>
+              .
             </p>
           </div>
         </div>

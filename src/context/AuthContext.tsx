@@ -3,7 +3,7 @@ import {
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
   signOut, 
-  onAuthStateChanged
+  onAuthStateChanged 
 } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
@@ -38,17 +38,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setLoading(true);
-      
+
       if (firebaseUser) {
         try {
           // Fetch user profile from Firestore
           const userDoc = await getDoc(doc(db, "users", firebaseUser.uid));
-          
+
           if (userDoc.exists()) {
             const userData = userDoc.data() as Omit<User, "id">;
             setUser({
               id: firebaseUser.uid,
-              ...userData
+              ...userData,
             });
           } else {
             // Basic user info if profile not found
@@ -64,7 +64,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       } else {
         setUser(null);
       }
-      
+
       setLoading(false);
     });
 
@@ -75,15 +75,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = async (email: string, password: string) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toast.success("Logged in successfully");
-    } catch (error: any) {
-      const message = error?.message || "Login failed";
+    } catch (err: unknown) {
+      const message = (err as { message?: string })?.message || "Login failed";
       setError(message);
       toast.error(message);
-      throw error;
+      throw err;
     } finally {
       setLoading(false);
     }
@@ -93,24 +93,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const register = async (name: string, email: string, password: string) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       // Create user in Firebase Auth
       const { user: firebaseUser } = await createUserWithEmailAndPassword(auth, email, password);
-      
+
       // Create user document in Firestore
       await setDoc(doc(db, "users", firebaseUser.uid), {
         name,
         email,
         createdAt: new Date(),
       });
-      
+
       toast.success("Account created successfully");
-    } catch (error: any) {
-      const message = error?.message || "Registration failed";
+    } catch (err: unknown) {
+      const message = (err as { message?: string })?.message || "Registration failed";
+      console.error("Error creating user document:", err); // Log the error
       setError(message);
       toast.error(message);
-      throw error;
+      throw err;
     } finally {
       setLoading(false);
     }
@@ -119,15 +120,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Logout function
   const logout = async () => {
     setLoading(true);
-    
+
     try {
       await signOut(auth);
       toast.success("Logged out successfully");
-    } catch (error: any) {
-      const message = error?.message || "Logout failed";
+    } catch (err: unknown) {
+      const message = (err as { message?: string })?.message || "Logout failed";
       setError(message);
       toast.error(message);
-      throw error;
+      throw err;
     } finally {
       setLoading(false);
     }
@@ -139,7 +140,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     error,
     login,
     register,
-    logout
+    logout,
   };
 
   return (
@@ -153,7 +154,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
